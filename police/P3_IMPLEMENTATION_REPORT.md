@@ -21,7 +21,7 @@ Não existe chamada policial a `GiveWeaponToPed`, writer paralelo de item, ponto
 
 `MZPoliceConfig.Stations` e `MZPoliceConfig.Armory.catalog` permanecem vazios. Assim, a instalação não cria ponto ou equipamento fictício.
 
-Cada estação real deve ser adicionada em `mz_police/server/config.lua` com:
+Cada estação real deve ser adicionada em `mz_police/config/server.lua` com:
 
 - chave da estação em minúsculas;
 - `label`;
@@ -93,7 +93,7 @@ Os payloads são fechados. O cliente informa apenas estação, chave de catálog
 ### `mz_police`
 
 - `fxmanifest.lua`
-- `server/config.lua`
+- `config/server.lua`
 - `server/bridge.lua`
 - `server/audit.lua`
 - `server/stations.lua`

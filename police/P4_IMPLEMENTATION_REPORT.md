@@ -63,7 +63,7 @@ As capabilities registradas, mas não adicionadas automaticamente ao seed polici
 
 ### `mz_police`
 
-- `server/config.lua`
+- `config/server.lua`
 - `server/bridge.lua`
 - `server/audit.lua`
 - `server/enforcement.lua`

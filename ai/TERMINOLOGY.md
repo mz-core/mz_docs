@@ -3,7 +3,7 @@ title: MZ Framework — Terminologia canônica
 status: CANONICAL
 authority: LEVEL_2_ARCHITECTURE
 owner: MZ Architecture
-last_reviewed: 2026-08-09
+last_reviewed: 2026-09-20
 applies_to: [all_resources, documentation, coding_agents]
 related_contracts: [MZ-RULES-v1, ADR-0001, ADR-0002, ADR-0015, ADR-0017]
 ---
@@ -18,8 +18,10 @@ related_contracts: [MZ-RULES-v1, ADR-0001, ADR-0002, ADR-0015, ADR-0017]
 - **authority**: fonte capaz de confirmar identity, state ou permission.
 - **capability**: permissão global explícita avaliada pelo core; não é role code.
 - **contextual authorization**: decisão do owner sobre actor e agregado/contexto específicos.
-- **session**: vínculo temporal server-side entre conexão e player.
-- **citizenId**: identificador persistente do player no domínio MZ; não equivale a `source`.
+- **accountId**: identidade persistente interna da conta; não equivale a license/Discord ID.
+- **characterId**: identidade persistente canônica de personagem, atualmente `mz_players.id`.
+- **session**: vínculo temporal server-side `source -> accountId -> activeCharacterId`.
+- **citizenId**: identificador legado estável de personagem durante a migração; não equivale a `source` nem `accountId`.
 - **projection**: cópia para leitura/UX sem autoridade de mutação.
 - **CURRENT**: comportamento/localização observado no runtime e código atuais.
 - **TARGET**: boundary/ownership ratificado a alcançar por migrations autorizadas.

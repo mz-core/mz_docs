@@ -3,7 +3,7 @@ title: mz_core — Resource documentation
 status: CANONICAL
 authority: LEVEL_2_ARCHITECTURE
 owner: mz_core
-last_reviewed: 2026-08-09
+last_reviewed: 2026-10-08
 applies_to: [mz_core, core_consumers]
 related_contracts: [MZ-CORE-BOUNDARY-v1, MZ-R001-MZ-R018, MZ-R024-MZ-R027, MZ-R048, MZ-R050, MZ-R054-MZ-R057]
 ---
@@ -16,25 +16,27 @@ Fundação mínima para bootstrap/readiness do core, identity, session, player l
 
 ## Owns
 
-- identity e identificadores fundamentais do player;
-- session e vínculo com a conexão;
+- account identity, character identity e identificadores fundamentais;
+- session e vínculo explícito `source -> accountId -> activeCharacterId`;
 - player lifecycle e estado fundamental necessário ao spawn seguro;
 - roles/capabilities globais e assignments de staff;
 - readiness do próprio core;
 - audit writer essencial;
-- tabelas e migrations dessas capacidades.
+- baseline estrito das tabelas dessas capacidades.
 
 ## Does Not Own
 
-Organization, economy, inventory, vehicles, garage, fuel, banking UI, houses, admin UI, bridges externos, import/backfill, documentação oficial ou testes cross-resource. Parte desse código ainda está fisicamente no core no estado CURRENT e será extraída somente em waves autorizadas.
+Organization, economy, inventory, vehicles, garage, fuel, houses/property, phone product, HUD/presentation, security incidents/bans, admin UI, bridges externos, import/backfill, documentação oficial ou testes cross-resource. O core não cria, lê ou escreve saldos, itens, memberships, veículos, propriedades, conteúdo de telefone ou sanções.
 
 ## Dependencies
 
-O manifest declara `oxmysql` e `ox_lib`. O fluxo CURRENT de spawn também chama `spawnmanager`; essa dependência operacional deve permanecer explícita até futura correção de manifest autorizada.
+O manifest declara `oxmysql`, `ox_lib` e `spawnmanager`.
 
 ## Public API
 
 Consulte o código atual e o catálogo histórico Wave 0 em `_architecture/mz_framework_v1/wave_0/catalog/apis.json`. Não há ainda catálogo vivo versionado em `mz_docs`; assinaturas não são duplicadas aqui.
+
+Os contratos de identity/session atuais estão em [Public identity API](../api/IDENTITY_API.md) e o modelo em [Account, character and session](ACCOUNT_CHARACTER_SESSION.md).
 
 ## Events/Callbacks
 
@@ -42,7 +44,7 @@ Eventos de rede validam payload, session e actor server-side. Evento recebido n�
 
 ## Database
 
-O owner target do core persiste apenas identity, session, autorização global, player lifecycle fundamental e audit essencial. Tabelas de domínio ainda presentes no repository são dívida CURRENT, não ownership target.
+O core persiste apenas identity, session, autorização global, player lifecycle fundamental e audit essencial. `mz_accounts` representa Identity Account e não contém `wallet`, `bank` ou `dirty`; Financial Account pertence a `mz_economy`.
 
 ## State
 
@@ -64,9 +66,15 @@ Readiness indisponível, session inválida, capability desconhecida ou dependên
 
 - player/session são resolvidos server-side;
 - `source` é locator de conexão, não identidade persistente;
+- `accountId` não é external identifier e `characterId` não é `citizenid`; `citizenid` é o identificador público canônico do Character;
+- `playerLoaded` exige active character validado e vinculado à session;
 - posição aceita para mutação crítica é plausível e server-observed;
 - role code nunca é contrato de autorização de consumer;
 - o core não adquire ownership por possuir código transitório de domínio.
+
+## Architectural freeze
+
+O boundary congelado, schema e procedimento de reset estao em [Core architectural freeze](CORE_ARCHITECTURAL_FREEZE.md).
 
 ## Integration
 
@@ -74,7 +82,11 @@ Veja o [guia de integração](../guides/CORE_INTEGRATION.md).
 
 ## Tests
 
-Harnesses próximos permanecem em `mz_core/tests` durante a Wave 1A. Evidência cross-resource futura pertence a `mz_testkit`; harness offline não prova runtime FiveM/OneSync/MySQL.
+Os harnesses do core ficam em `mz_testkit/tests/mz_core` e são executados pelo runner central com o working directory do resource. Harness offline não prova runtime FiveM/OneSync/MySQL.
+
+## Detailed references
+
+Contratos, operação, segurança, comandos e escopo detalhados estão no [índice de referências](reference/README.md).
 
 ## Related Rules
 

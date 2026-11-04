@@ -158,7 +158,7 @@ para `NOT NULL`. Ambiguidade ou ausência de acusação mantém P7 bloqueado. Ne
 - Prisão em police: `MZPoliceConfig.Prison.enabled = false`.
 - `mz_prison`: intake, regras de sentença/redução, soltura manual e trabalhos desativados; pontos de
   intake/release e catálogos vazios.
-- Harness P1: `mz_police_p1_gate_enabled=0` por padrão e restrito a staging/console.
+- Harness P1: removido do runtime na limpeza estrutural; QA preservado externamente.
 
 ## MDT frontend
 

@@ -3,7 +3,7 @@ title: mz_core — Player lifecycle
 status: REFERENCE
 authority: LEVEL_4_REFERENCE
 owner: mz_core
-last_reviewed: 2026-08-09
+last_reviewed: 2026-09-20
 applies_to: [mz_core_player, player_consumers]
 related_contracts: [MZ-CORE-BOUNDARY-v1, MZ-R001-MZ-R010, ADR-0001]
 ---
@@ -17,13 +17,17 @@ O core mantém identity, session, registry online, transições de lifecycle e e
 ## Autoridade
 
 - `source` identifica a conexão ativa e deve ser resolvido para a session/player server-side;
-- `citizenId` é identidade persistente do player no domínio MZ;
+- `accountId` é a identidade persistente interna da conta;
+- `characterId` (`mz_players.id`) é a identidade canônica do personagem;
+- `citizenId` é o identificador legado estável do personagem durante a migração;
 - state bags e payloads client-side são projeções/inputs não confiáveis;
 - posição usada por mutação crítica deve ser server-observed, plausível e vinculada à session atual.
 
 ## Integração
 
 Antes de consumir estado do player, confirme readiness e session. Use contratos públicos observados no código; não leia tabelas do core ou caches internos. Consumers devem tolerar unload, reconnect, source reuse e falha intermediária.
+
+O lifecycle de identidade passa por `CHARACTER_SELECTION`, `CHARACTER_ACTIVATING` e `CHARACTER_ACTIVE`. O evento `mz_core:client:playerLoaded` somente ocorre no último estado. Veja [Account, character and session](ACCOUNT_CHARACTER_SESSION.md).
 
 ## Evidência
 

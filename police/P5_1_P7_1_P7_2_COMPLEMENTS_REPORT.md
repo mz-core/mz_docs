@@ -24,7 +24,7 @@ Os complementos foram concluídos sem iniciar P8/P9, sem alterar `mz_core`, sem 
 
 ### Evidências
 
-Em `mz_police/server/config.lua`, `Evidence.occurrenceAssociationEnabled` permanece `false`. Somente após aprovação, habilitar a flag e manter os contêineres reais em `Evidence.containers`. A consulta exige `police.evidence.collect`; a associação exige `police.evidence.manage` e duty válido pela policy canônica.
+Em `mz_police/config/server.lua`, `Evidence.occurrenceAssociationEnabled` permanece `false`. Somente após aprovação, habilitar a flag e manter os contêineres reais em `Evidence.containers`. A consulta exige `police.evidence.collect`; a associação exige `police.evidence.manage` e duty válido pela policy canônica.
 
 ### Atividades prisionais
 

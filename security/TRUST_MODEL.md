@@ -27,4 +27,6 @@ State bags, caches e read models podem acelerar leitura e UX. Eles possuem produ
 
 ## Segredos e observabilidade
 
+Confidence na classificação de um evento não implica culpabilidade. Heartbeat, presença de resource e `onClientResourceStop` são telemetria client-side e nunca concedem autorização. O modelo operacional está em [BanGuard e segurança orientada a incidentes](BANGUARD_INCIDENT_SECURITY.md).
+
 Logs/audits não registram secrets, credentials ou authorization headers. Evidência deve diferenciar análise estática, harness e runtime real.

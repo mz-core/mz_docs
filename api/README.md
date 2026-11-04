@@ -10,6 +10,12 @@ related_contracts: [MZ-R005, MZ-R015, MZ-R031, MZ-R032, MZ-R044, MZ-R049, MZ-R05
 
 # API documentation
 
+Os contratos atuais de incidentes, capabilities, session timeline e canários estão em [BanGuard e segurança orientada a incidentes](../security/BANGUARD_INCIDENT_SECURITY.md).
+
+Os contratos vivos de Vehicles e Garage estão em [Vehicles e Garage domain extraction](../vehicles/DOMAIN_EXTRACTION.md).
+
+O contrato client-side de opções contextuais está em [Target API](TARGET_API.md).
+
 ## Estado atual
 
 O catálogo em `_architecture/mz_framework_v1/wave_0/catalog/apis.json` registra exports, events e callbacks observados no snapshot Wave 0. Ele é evidência histórica, não promessa automática de estabilidade nem catálogo vivo permanente.

@@ -189,8 +189,7 @@ Permanecem fail-closed por padrão:
 - `MZPrisonConfig.intakeEnabled = false`, `intakePoints = {}`;
 - `sentenceRulesEnabled`, `reductionRulesEnabled`, `manualReleaseEnabled` e `jobsEnabled` em `false`;
 - regras, motivos, jobs e `releasePoints` vazios;
-- harness P1 desativado, salvo com `mz_police_environment=staging` e
-  `mz_police_p1_gate_enabled=1` durante G01–G10.
+- harness P1 removido do runtime na limpeza estrutural; QA preservado externamente.
 
 O `dutyPoint` não pertence a `mz_police`. Um Staff autorizado deve usar o fluxo administrativo do
 `mz_org`/`UpdateStaffOrganizationDutyPoint`, que persiste em `mz_orgs.config_json`:
