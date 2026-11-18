@@ -17,7 +17,7 @@ source -> session -> accountId -> activeCharacterId -> citizenid
 ```
 
 - `source` is an ephemeral FiveM connection locator.
-- `accountId` is the internal persistent account identity. A license, Discord ID or other external identifier is an account credential, never the account ID.
+- `accountId` is the internal persistent account identity. The FiveM `license:` identifier authenticates an account; IP, Discord, `license2` and other identifiers do not prove account ownership.
 - `characterId` is the immutable numeric `mz_players.id` and the canonical character identity.
 - `citizenid` is the stable canonical public identifier of a Character. It is distinct from the internal numeric `characterId`.
 - `sessionId` identifies one connection session. A session has at most one active character.
@@ -25,6 +25,8 @@ source -> session -> accountId -> activeCharacterId -> citizenid
 ## Persistence
 
 `mz_core` owns `mz_accounts`, `mz_account_identifiers`, character identity in `mz_players`, and the account/character binding in `mz_player_sessions`. External identifiers exist only in `mz_account_identifiers`; `mz_players` and public Character DTOs do not duplicate `license`.
+
+Account resolution and new identifier bindings use only `license:`. Existing auxiliary identifier rows are retained but ignored for authentication. An account with multiple distinct `license:` bindings fails closed and requires manual investigation; no account or identifier is automatically merged or removed.
 
 The unique active-character constraint is enforced server-side and by `mz_player_sessions.active_character_id`: active sessions may contain only one non-null value for a character. Closing or recovering a session clears that active marker.
 
@@ -66,6 +68,8 @@ Hot character switching is `NOT YET SAFE`. The current runtime cannot prove comp
 - disconnect/resource-stop clears runtime caches and active markers;
 - core restart marks stale sessions disconnected before accepting new sessions;
 - creator cancellation archives the unfinalized draft and returns to selection;
+- reconnecting resumes an available `creating` draft owned by the account; drafts do not expire automatically;
+- creation records the draft, request key and pending session together under the account database lock; archived request keys cannot be replayed;
 - an activation failure after durable finalization restores the pending creator binding for retry/cancel;
 - account-scoped mutation serialization prevents concurrent requests from consuming the same final slot;
 - database and identity conflicts fail closed and are observable.
